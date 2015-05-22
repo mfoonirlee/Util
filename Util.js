@@ -36,6 +36,26 @@
             }
         }
         return res;
+    },
+    /**
+     * @description: 身份证号验证
+     * @param: string
+     */
+    isIdCard: function (idCard) {
+      var num = idCard.toLowerCase().match(/\w/g);
+      if (idCard.match(/^\d{17}[\dx]$/i)) {
+        var sum = 0, times = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+        for (var i = 0; i < 17; i++)
+          sum += parseInt(num[i], 10) * times[i];
+        if ("10x98765432".charAt(sum % 11) != num[17]) {
+          return false;
+        }
+        return !!idCard.replace(/^\d{6}(\d{4})(\d{2})(\d{2}).+$/, "$1-$2-$3");
+      }
+      if (idCard.match(/^\d{15}$/)) {
+        return !!idCard.replace(/^\d{6}(\d{2})(\d{2})(\d{2}).+$/, "19$1-$2-$3");
+      }
+      return false;
     }
   };
   //非模块加载的环境下，在window下给予该类的一个引用
