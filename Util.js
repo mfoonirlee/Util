@@ -2,6 +2,11 @@
 * @description : 一些公共的方法的静态类
 */
 ;(function(){
+  function toHex(n){
+    var hex = n.toString(16);
+    return (hex.length < 2) ? [0, hex].join('') : hex;
+  }
+  
   var Util = {
     /**
     * @description : 验证输入的号码是否符合手机号码规则 符合返回true
@@ -56,7 +61,16 @@
         return !!idCard.replace(/^\d{6}(\d{2})(\d{2})(\d{2}).+$/, "19$1-$2-$3");
       }
       return false;
-    }
+    },
+    /**
+     * @description: 转换数字为16进制数
+     * @param: {int} red value
+     * @param: {int} green value
+     * @param: {int} blue value
+     */
+     rgbToHex: function(r, g, b){
+       return ['#', toHex(r), toHex(g), toHex(b)].join('');
+     }
   };
   //非模块加载的环境下，在window下给予该类的一个引用
   window.Util = Util;
